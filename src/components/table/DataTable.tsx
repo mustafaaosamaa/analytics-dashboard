@@ -11,6 +11,7 @@ import {
 
 import { useEffect, useMemo, useState } from "react";
 import TableFilters from "@/components/table/TableFilters";
+import ExportButtons from "@/components/table/ExportButtons";
 
 import {
     DashboardUser,
@@ -172,23 +173,26 @@ export default function DataTable({
 
             {/* Table Header */}
             <div className="border-b border-gray-200 p-5">
-                <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
-                        Users
-                    </h3>
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                            Users
+                        </h3>
 
-                    <p className="mt-1 text-sm text-gray-500">
-                        Manage and monitor your users
-                    </p>
+                        <p className="mt-1 text-sm text-gray-500">
+                            Manage and monitor your users
+                        </p>
 
-                    <p className="mt-3 text-sm text-gray-500">
-                        Showing{" "}
-                        <span className="font-semibold text-gray-900">
-                            {filteredData.length}
-                        </span>{" "}
-                        {filteredData.length === 1 ? "user" : "users"}
-                    </p>
+                        <p className="mt-3 text-sm text-gray-500">
+                            Showing{" "}
+                            <span className="font-semibold text-gray-900">
+                                {filteredData.length}
+                            </span>{" "}
+                            {filteredData.length === 1 ? "user" : "users"}
+                        </p>
+                    </div>
 
+                    <ExportButtons users={filteredData} />
                 </div>
             </div>
 
