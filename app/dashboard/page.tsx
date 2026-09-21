@@ -3,8 +3,10 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+import RevenueChart from "@/components/dashboard/RevenueChart";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import StatsCard from "@/components/dashboard/StatsCard";
+import DashboardSkeleton from "@/components/ui/DashboardSkeleton";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchDashboardData } from "@/store/slices/dashboardSlice";
@@ -42,11 +44,7 @@ export default function DashboardPage() {
   if (isLoading || !data) {
     return (
       <DashboardLayout>
-        <div className="flex min-h-[400px] items-center justify-center">
-          <div className="text-sm text-gray-500">
-            Loading dashboard...
-          </div>
-        </div>
+        <DashboardSkeleton />
       </DashboardLayout>
     );
   }
@@ -54,7 +52,7 @@ export default function DashboardPage() {
   if (error) {
     return (
       <DashboardLayout>
-        <div className="rounded-xl border border-red-200 bg-red-50 p-6">
+        <div className="rounded-2xl border border-red-200 bg-red-50 p-6">
           <h2 className="font-semibold text-red-700">
             Failed to load dashboard
           </h2>
@@ -62,6 +60,14 @@ export default function DashboardPage() {
           <p className="mt-1 text-sm text-red-600">
             {error}
           </p>
+
+          <button
+            type="button"
+            onClick={() => dispatch(fetchDashboardData())}
+            className="mt-4 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700"
+          >
+            Try again
+          </button>
         </div>
       </DashboardLayout>
     );
@@ -69,6 +75,7 @@ export default function DashboardPage() {
 
   const {
     stats,
+    revenueData,
     activities,
   } = data;
 
@@ -141,11 +148,7 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            <div className="flex h-72 items-center justify-center rounded-xl bg-gray-50">
-              <p className="text-sm text-gray-400">
-                Chart coming next...
-              </p>
-            </div>
+            <RevenueChart data={revenueData} />
 
           </div>
 
