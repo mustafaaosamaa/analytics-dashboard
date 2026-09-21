@@ -7,9 +7,13 @@ import RevenueChart from "@/components/dashboard/RevenueChart";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import StatsCard from "@/components/dashboard/StatsCard";
 import DashboardSkeleton from "@/components/ui/DashboardSkeleton";
+import DataTable from "@/components/table/DataTable";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchDashboardData } from "@/store/slices/dashboardSlice";
+import {
+  fetchDashboardData,
+  fetchUsers,
+} from "@/store/slices/dashboardSlice";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -22,7 +26,9 @@ export default function DashboardPage() {
 
   const {
     data,
+    users,
     isLoading,
+    isUsersLoading,
     error,
   } = useAppSelector(
     (state) => state.dashboard
@@ -35,7 +41,12 @@ export default function DashboardPage() {
     }
 
     dispatch(fetchDashboardData());
-  }, [isAuthenticated, router, dispatch]);
+    dispatch(fetchUsers());
+  }, [
+    isAuthenticated,
+    router,
+    dispatch,
+  ]);
 
   if (!isAuthenticated) {
     return null;
@@ -195,6 +206,18 @@ export default function DashboardPage() {
 
           </div>
 
+        </section>
+
+        <section>
+          {isUsersLoading ? (
+            <div className="flex min-h-[300px] items-center justify-center rounded-2xl border border-gray-200 bg-white">
+              <p className="text-sm text-gray-500">
+                Loading users...
+              </p>
+            </div>
+          ) : (
+            <DataTable data={users} />
+          )}
         </section>
 
       </div>
