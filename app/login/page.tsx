@@ -26,6 +26,11 @@ export default function LoginPage() {
     );
 
     if (loginUser.fulfilled.match(result)) {
+      localStorage.setItem(
+        "dashboard_user",
+        JSON.stringify(result.payload)
+      );
+
       router.push("/dashboard");
     }
   };

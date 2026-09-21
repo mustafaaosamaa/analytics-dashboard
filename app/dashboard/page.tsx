@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { logout } from "@/store/slices/authSlice";
@@ -9,11 +10,26 @@ export default function DashboardPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const user = useAppSelector((state) => state.auth.user);
+  const { user, isAuthenticated } = useAppSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.replace("/login");
+    }
+  }, [isAuthenticated, router]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const handleLogout = () => {
+    localStorage.removeItem("dashboard_user");
+
     dispatch(logout());
-    router.push("/login");
+
+    router.replace("/login");
   };
 
   return (

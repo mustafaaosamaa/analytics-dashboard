@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { StoreProvider } from "@/store/provider";
+import { AuthInitializer } from "@/components/auth/AuthInitializer";
 
 import "./globals.css";
 
@@ -17,7 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <AuthInitializer>
+            {children}
+          </AuthInitializer>
+        </StoreProvider>
       </body>
     </html>
   );
