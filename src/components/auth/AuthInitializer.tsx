@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
+import { useEffect } from "react";
 import { restoreSession } from "@/store/slices/authSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { User } from "@/types/auth";
@@ -15,33 +14,20 @@ export function AuthInitializer({
 }: AuthInitializerProps) {
   const dispatch = useAppDispatch();
 
-  const [isInitialized, setIsInitialized] = useState(false);
-
   useEffect(() => {
     const storedUser = localStorage.getItem("dashboard_user");
 
-    if (storedUser) {
-      try {
-        const user: User = JSON.parse(storedUser);
-
-        dispatch(restoreSession(user));
-      } catch {
-        localStorage.removeItem("dashboard_user");
-      }
+    if (!storedUser) {
+      return;
     }
 
-    setIsInitialized(true);
+    try {
+      const user: User = JSON.parse(storedUser);
+      dispatch(restoreSession(user));
+    } catch {
+      localStorage.removeItem("dashboard_user");
+    }
   }, [dispatch]);
-
-  if (!isInitialized) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-100">
-        <div className="text-gray-500">
-          Loading...
-        </div>
-      </div>
-    );
-  }
 
   return <>{children}</>;
 }
