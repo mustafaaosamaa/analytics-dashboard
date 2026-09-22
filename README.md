@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AnalyticsHub Dashboard
 
-## Getting Started
+A responsive sales and users analytics dashboard built with Next.js, React, TypeScript, Tailwind CSS, Redux Toolkit, Recharts, and TanStack Table.
 
-First, run the development server:
+The project was developed as a frontend take-home assignment with a focus on clean component architecture, state management, responsive UI, dynamic data handling, table functionality, data export, and Dockerized deployment.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Authentication
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Mock authentication flow
+- Login validation
+- Loading and error states
+- Persistent login session using localStorage
+- Protected dashboard route
+- Logout functionality
 
-## Learn More
+### Dashboard
 
-To learn more about Next.js, take a look at the following resources:
+- Responsive dashboard layout
+- Sidebar navigation
+- Responsive mobile navigation
+- KPI/statistics cards
+- Revenue analytics chart
+- Recent activity section
+- Loading skeleton
+- Error state with retry functionality
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Users Table
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Dynamic user data
+- Search by name or email
+- Filter by status
+- Filter by role
+- Combined search and filters
+- Column sorting
+- Pagination
+- Configurable page size
+- Result count
+- Empty state
+- Responsive horizontal scrolling
 
-## Deploy on Vercel
+### Data Export
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Export filtered users to PDF
+- Export filtered users to Excel
+- Exported data reflects the currently applied search and filters
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Deployment
+
+- Production Next.js build
+- Multi-stage Docker image
+- Docker Compose configuration
+- Standalone Next.js output
+
+---
+
+## Tech Stack
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Redux Toolkit
+- React Redux
+- Recharts
+- TanStack Table
+- jsPDF
+- jsPDF AutoTable
+- SheetJS / xlsx
+- Docker
+- Git
+
+---
+
+## Project Structure
+
+```text
+src/
+├── app/
+│   ├── login/
+│   │   └── page.tsx
+│   ├── dashboard/
+│   │   └── page.tsx
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── globals.css
+│
+├── components/
+│   ├── auth/
+│   │   └── AuthInitializer.tsx
+│   │
+│   ├── dashboard/
+│   │   ├── RevenueChart.tsx
+│   │   └── StatsCard.tsx
+│   │
+│   ├── layout/
+│   │   ├── DashboardLayout.tsx
+│   │   ├── Navbar.tsx
+│   │   └── Sidebar.tsx
+│   │
+│   ├── table/
+│   │   ├── DataTable.tsx
+│   │   ├── ExportButtons.tsx
+│   │   └── TableFilters.tsx
+│   │
+│   └── ui/
+│       └── DashboardSkeleton.tsx
+│
+├── data/
+│   ├── mockData.ts
+│   └── usersData.ts
+│
+├── lib/
+│   ├── exportExcel.ts
+│   └── exportPdf.ts
+│
+├── services/
+│   ├── authService.ts
+│   └── dashboardService.ts
+│
+├── store/
+│   ├── hooks.ts
+│   ├── index.ts
+│   ├── provider.tsx
+│   └── slices/
+│       ├── authSlice.ts
+│       └── dashboardSlice.ts
+│
+└── types/
+    ├── auth.ts
+    ├── dashboard.ts
+    └── user.ts
